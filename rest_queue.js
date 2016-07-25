@@ -86,5 +86,5 @@ router.get('/list', function(req, res) {
 app.use('/queueApi', router);
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  console.log('REST Queue server listening on port 3000');
 });
