@@ -31,7 +31,7 @@ router.use(function(req, res, next) {
 router.put("/createQueue", function(req, res) {
   let thisQueueAr = [];
   let queue = { "name": req.body.name, "queue": thisQueueAr };
-  
+
   if (findQueueIndex(req.body.name) < 0) {
     queueList.push(queue);
     res.json({ "status": "OK" });
@@ -43,7 +43,7 @@ router.put("/createQueue", function(req, res) {
 
 router.get("/findQueue/:queue", function(req, res) {
   let i = findQueueIndex(req.params.name);
-  
+
   if (i >= 0)
     res.json({ "status" : "OK", "queue": queueList[i].queue });
   else {
@@ -53,12 +53,12 @@ router.get("/findQueue/:queue", function(req, res) {
 
 router.put("/sendMsg", function(req, res) {
   let queueIndex = findQueueIndex(req.body.queue);
-  
+
   if (queueIndex >= 0) {
     let id = Math.floor(Date.now() / 1000);
   	let dt = new Date();
   	let jsonObj = { "id": id, "date": dt, "message": req.body.message };
-    
+
     queueList[queueIndex].queue.push(jsonObj);
   	res.json({ "status": "OK", "id": id });
   }
@@ -69,7 +69,7 @@ router.put("/sendMsg", function(req, res) {
 
 router.get("/getMsg/:queue", function(req, res) {
   let queueIndex = findQueueIndex(req.params.queue);
-  
+
   if (queueIndex >= 0) {
     res.json(queueList[queueIndex].queue.shift());
    }
@@ -80,7 +80,7 @@ router.get("/getMsg/:queue", function(req, res) {
 
 router.delete("/deleteQueue/:queue", function(req, res) {
   let queueIndex = findQueueIndex(req.params.queue);
-  
+
   if (queueIndex >= 0) {
     queueList.splice(queueIndex, 1);
     res.json({ "status": "OK"});
